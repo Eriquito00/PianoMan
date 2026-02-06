@@ -1,4 +1,4 @@
-export const audios = {
+export const audios: Record<number, string> = {
     65: "./audio/c1.mp3",
     83: "./audio/d1.mp3",
     68: "./audio/e1.mp3",
@@ -31,7 +31,7 @@ export const audios = {
     48: "./audio/a2s.mp3"
 };
 
-export const keyMapping = {
+export const keyMapping: Record<number,number> = {
     75: 82,
     76: 84,  
     192: 89,
@@ -45,8 +45,11 @@ export const keyMapping = {
  * @param {*} pos Numero de la tecla
  * @param {*} e Evento correspondiente
  */
-export function touchKey(pos, e) {
-    if (audios[pos] && !e.repeat) {
+export function touchKey(pos: number, e: KeyboardEvent | MouseEvent) {
+    if (e instanceof MouseEvent && audios[pos]) {
+        playAudio(pos);
+    }
+    else if (e instanceof KeyboardEvent && audios[pos] && !e.repeat) {
         playAudio(pos);
     }
 }
@@ -55,7 +58,7 @@ export function touchKey(pos, e) {
  * Empieza a reproducir un audio
  * @param {*} pos Numero clave para identificar el audio
  */
-export function playAudio(pos) {
+export function playAudio(pos: number) {
     new Audio(audios[pos]).play();
 }
 
@@ -63,7 +66,7 @@ export function playAudio(pos) {
  * Añade el estilo "activo" a la tecla pulsada
  * @param {*} element Tecla pulsada
  */
-export function addStyle(element) {
+export function addStyle(element: Element) {
     element.classList.add("activa");
 }
 
@@ -71,7 +74,7 @@ export function addStyle(element) {
  * Quita el estilo "activo" a la tecla que ya no esta pulsada
  * @param {*} element Tecla ya no pulsada
  */
-export function removeStyle(element) {
+export function removeStyle(element: Element) {
     element.classList.remove("activa");
 }
 
@@ -80,7 +83,7 @@ export function removeStyle(element) {
  * @param {number} keyCode KeyCode presionado
  * @returns {number} KeyCode redirijido
  */
-export function getVisualKey(keyCode) {
+export function getVisualKey(keyCode: number) {
     return keyMapping[keyCode] || keyCode;
 }
 
@@ -88,7 +91,7 @@ export function getVisualKey(keyCode) {
  * Añade nuevas teclas que se han tocado a un Set que guarda todas las teclas que se estan tocando
  * @param {*} e Evento correspondiente
  */
-export function addKeys(e, activeKeys) {
+export function addKeys(e: TouchEvent, activeKeys: Set<number>) {
     const touches = e.touches;
 
     for (const touch of touches) {
@@ -110,7 +113,7 @@ export function addKeys(e, activeKeys) {
  * Quita teclas que se han dejado de tocar del Set que guarda las teclas que se estan tocando
  * @param {*} e Evento correspondiente
  */
-export function removeKeys(e, activeKeys) {
+export function removeKeys(e: TouchEvent, activeKeys: Set<number>) {
     const pressedKeys = new Set();
 
     for (const touch of e.touches) {

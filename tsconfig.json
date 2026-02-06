@@ -1,0 +1,12 @@
+{
+    "compilerOptions": {
+        "target": "esnext",
+        "module": "esnext",
+        "sourceMap": false,
+        "noEmitOnError": true,
+        "noImplicitAny": true,
+        "strict": true,
+        "outDir": "./public/js",
+        "rootDir": "./src"
+    }
+}

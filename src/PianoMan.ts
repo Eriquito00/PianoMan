@@ -4,14 +4,14 @@
 // Alumnes: Eric Mejias - David Catalan
 ///////////////////////////////////////////////////////////
 
-import { audios, touchKey, addStyle, removeStyle, getVisualKey, addKeys, removeKeys } from "./lib_piano.js";
+import { audios, touchKey, addStyle, removeStyle, getVisualKey, addKeys, removeKeys } from "./lib/lib_piano.js";
 
 const piano = document.getElementById("piano");
 const textFile = document.getElementById("textFile");
 const textarea = document.getElementById("textarea");
-const activeKeys = new Set();
+const activeKeys: Set<number> = new Set();
 
-let activeMouse = null;
+let activeMouse: Element | null = null;
 let readerText = new FileReader();
 
 /**
@@ -38,11 +38,11 @@ document.body.addEventListener("keyup", (e) => {
 /**
  * Evento para detectar cuando se le da click
  */
-piano.addEventListener("mousedown", (e) => {
-    if (e.button === 0 && e.target.tagName.toUpperCase() === "RECT") {
-        const id = parseInt(e.target.id.substring(1));
-        activeMouse = e.target;
-        addStyle(e.target);
+piano!.addEventListener("mousedown", (e: MouseEvent) => {
+    if (e.button === 0 && (e.target as Element).tagName.toUpperCase() === "RECT") {
+        const id = parseInt((e.target as Element).id.substring(1));
+        activeMouse = e.target as Element;
+        addStyle(e.target as Element);
         touchKey(id, e);
     }
 });
@@ -50,8 +50,8 @@ piano.addEventListener("mousedown", (e) => {
 /**
  * Evento para detectar cuando se suelta el click
  */
-piano.addEventListener("mouseup", (e) => {
-    if (e.button === 0 && e.target.tagName.toUpperCase() === "RECT") {
+piano!.addEventListener("mouseup", (e) => {
+    if (e.button === 0 && (e.target as Element).tagName.toUpperCase() === "RECT") {
         if (activeMouse) {
             removeStyle(activeMouse);
             activeMouse = null;
@@ -62,7 +62,7 @@ piano.addEventListener("mouseup", (e) => {
 /**
  * Evento para cuando le das tactil a las teclas
  */
-piano.addEventListener("touchstart", (e) => {
+piano!.addEventListener("touchstart", (e) => {
     e.preventDefault();
     addKeys(e, activeKeys);
 });
@@ -70,7 +70,7 @@ piano.addEventListener("touchstart", (e) => {
 /**
  * Evento para cuando dejas de darle tactil a las teclas
  */
-piano.addEventListener("touchend", (e) => {
+piano!.addEventListener("touchend", (e) => {
     e.preventDefault();
     removeKeys(e, activeKeys);
 });
@@ -78,17 +78,17 @@ piano.addEventListener("touchend", (e) => {
 /**
  * Comprueba cuando mantienes el tactil y vas moviendo entreteclas
  */
-piano.addEventListener("touchmove", (e) => {
+piano!.addEventListener("touchmove", (e) => {
     e.preventDefault();
     addKeys(e, activeKeys);
     removeKeys(e, activeKeys);
 });
 
-textFile.addEventListener("change", (e) => {
-    const files = e.target.files;
-    readerText.readAsText(files[0]);
+textFile!.addEventListener("change", (e) => {
+    const files = (e.target as HTMLInputElement).files;
+    readerText.readAsText(files![0]);
 });
 
 readerText.onload = (e) => {
-    textarea.value = e.target.result;
+    (textarea as HTMLTextAreaElement)!.value = (e.target as FileReader).result as string;
 }
