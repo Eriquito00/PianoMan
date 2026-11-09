@@ -1,15 +1,28 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
 	<meta charset="utf-8">
-	<title>PianoMan</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>PianoMan: piano virtual | Eric Mejias Gamonal</title>
+	<meta name="description" content="Toca un piano virtual con el teclado, el ratón o una pantalla táctil. Explora PianoMan, un proyecto de Eric Mejias Gamonal y David Catalan, y su código en GitHub.">
+	<link rel="canonical" href="https://ericmejias.es/pianoman/">
+	<meta property="og:type" content="website">
+	<meta property="og:url" content="https://ericmejias.es/pianoman/">
+	<meta property="og:title" content="PianoMan: piano virtual">
+	<meta property="og:description" content="Un piano interactivo con TypeScript para tocar desde el navegador con teclado, ratón o pantalla táctil.">
 	<link rel="stylesheet" href="./styles/style.css">
 	<script defer src="./js/Touch.js"></script>
 	<script type="module" defer src="./js/PianoMan.js"></script>
 </head>
 
 <body>
-	<svg id="piano" width="632" height="220">
+	<header>
+		<h1>PianoMan: piano virtual</h1>
+		<p>Toca las teclas con el ratón, la pantalla táctil o las letras indicadas en el piano. Puedes cargar un archivo de texto para consultar tus notas.</p>
+		<p>Proyecto de Eric Mejias Gamonal (Eriquito00) y David Catalan. <a href="https://ericmejias.es/">Portfolio de Eric Mejias Gamonal</a> · <a href="https://github.com/Eriquito00/PianoMan">Código de PianoMan en GitHub</a></p>
+	</header>
+	<main>
+	<svg id="piano" width="632" height="220" viewBox="0 0 632 220" aria-label="Piano virtual interactivo">
 		<rect x="1" y="1" width="45" height="218" class="white" id="k65"></rect><text x="24" y="205" class="white" id="c65">A</text>
 		<rect x="46" y="1" width="45" height="218" class="white" id="k83"></rect><text x="69" y="205" class="white" id="c83">S</text>
 		<rect x="91" y="1" width="45" height="218" class="white" id="k68"></rect><text x="114" y="205" class="white" id="c68">D</text>
@@ -36,9 +49,10 @@
 		<rect x="571" y="1" width="30" height="98" class="black" id="k48"></rect><text x="586" y="90" id="c48">0</text>
 	</svg>
 	<section>
-		<textarea id="textarea" readonly></textarea>
+		<textarea id="textarea" aria-label="Notas del archivo de texto" readonly></textarea>
 		<input type="file" id="textFile" accept=".txt" hidden>
-		<button class="btnFile"><label class="labelFile" for="textFile">Upload File</label></button>
+		<button class="btnFile"><label class="labelFile" for="textFile">Cargar archivo de texto</label></button>
 	</section>
+	</main>
 </body>
 </html>
